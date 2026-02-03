@@ -257,14 +257,17 @@ export default function CaseOverviewPage() {
                   Review Discovery Requests
                 </Link>
                 <Link
-                  href={`/cases/${caseId}/generate`}
+                  href={`/cases/${caseId}/review`}
                   className="w-full px-4 py-3 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg text-sm font-medium transition-all text-center"
+                >
+                  Review All Responses
+                </Link>
+                <Link
+                  href={`/cases/${caseId}/generate`}
+                  className="w-full px-4 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg text-sm font-medium transition-all text-center"
                 >
                   Generate Documents
                 </Link>
-                <button className="w-full px-4 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg text-sm font-medium transition-all">
-                  Upload New Documents
-                </button>
               </div>
             </section>
 

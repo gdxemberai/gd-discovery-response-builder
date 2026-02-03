@@ -286,10 +286,10 @@ export default function ConfigureResponsePage() {
                 Save Draft
               </button>
               <Link
-                href={`/cases/${caseId}/generate`}
+                href={`/cases/${caseId}/review`}
                 className="px-6 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-all shadow-[0_2px_10px_rgba(255,94,0,0.2)]"
               >
-                Continue to Generate
+                Review All Responses
               </Link>
             </div>
           </div>

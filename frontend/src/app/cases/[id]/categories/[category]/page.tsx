@@ -270,12 +270,20 @@ export default function CategoryReviewPage() {
                     {getStatusBadge(selectedRequest.status)}
                     <span className="text-xs text-neutral-400">Last updated: Today</span>
                   </div>
-                  <Link
-                    href={`/cases/${caseId}/categories/${category}/configure`}
-                    className="w-full px-4 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-all text-center block shadow-[0_2px_10px_rgba(255,94,0,0.2)]"
-                  >
-                    Configure Response
-                  </Link>
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href={`/cases/${caseId}/categories/${category}/requests/${selectedRequest.number}`}
+                      className="w-full px-4 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-all text-center block shadow-[0_2px_10px_rgba(255,94,0,0.2)]"
+                    >
+                      Custom Response
+                    </Link>
+                    <Link
+                      href={`/cases/${caseId}/categories/${category}/configure`}
+                      className="w-full px-4 py-2 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg text-sm font-medium transition-all text-center block"
+                    >
+                      Configure Category
+                    </Link>
+                  </div>
                 </div>
               </>
             )}

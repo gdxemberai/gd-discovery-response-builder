@@ -17,8 +17,8 @@ export default function CreateCasePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Navigate to the newly created case
-    router.push('/cases/chicas-v-amazon')
+    // Navigate to upload documents step
+    router.push('/cases/new/upload')
   }
 
   return (
