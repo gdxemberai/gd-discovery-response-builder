@@ -8,7 +8,6 @@ import {
   FireIcon,
   CaseIcon,
   FolderIcon,
-  CalendarIcon,
   SettingsIcon,
   PanelLeftIcon,
   PanelLeftOpenIcon,
@@ -25,7 +24,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ expanded = false, onToggle }) 
   const navItems = [
     { href: '/cases', icon: CaseIcon, label: 'Cases', matchPaths: ['/cases'] },
     { href: '/vault', icon: FolderIcon, label: 'The Vault', matchPaths: ['/vault'] },
-    { href: '/calendar', icon: CalendarIcon, label: 'Calendar', matchPaths: ['/calendar'] },
   ]
 
   const isActive = (paths: string[]) => {
