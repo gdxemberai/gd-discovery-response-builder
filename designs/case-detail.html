@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Create New Case</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Iconify -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #ffffff;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Sidebar Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header Triggers */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header { padding-left: 1rem; padding-right: 1rem; justify-content: space-between; }
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Text Transitions */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+body.has-expanded-sidebar .toggle-hints-wrapper { display: flex !important; }
+/* Custom Form Elements */
+.custom-radio:checked + div {
+background-color: rgba(255, 94, 0, 0.03);
+border-color: #FF5E00;
+}
+.custom-radio:checked + div .radio-circle {
+border-color: #FF5E00;
+border-width: 5px;
+}
+/* Dropdown Arrow Animation */
+details summary { list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details[open] summary svg.chevron { transform: rotate(180deg); }
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+  <body class="min-h-screen overflow-x-hidden selection:bg-[#FF5E00] selection:text-white relative bg-white text-neutral-900 flex">
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
+    </div>
+
+    <!-- Zone 2: Left Sidebar (Global Navigation) -->
+    <nav class="fixed z-50 flex flex-col bg-white/80 w-[72px] border-neutral-100/80 border-r pt-6 pb-6 top-0 bottom-0 left-0 backdrop-blur-xl justify-between" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fire">
+                <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path>
+              </svg>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <path d="M9 3v18"></path>
+                <path d="m14 9 3 3-3 3"></path>
+              </svg>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M9 3v18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Dashboard -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard w-5 h-5 stroke-[1.5]">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Command Center
+            </span>
+          </a>
+          <!-- The Vault -->
+          <a href="#vault" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed w-5 h-5 stroke-[1.5]">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+            </svg>
+            <div class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 shadow-lg transition-opacity duration-300 text-xs flex items-center gap-2">
+              The Vault
+            </div>
+          </a>
+          <!-- New Case (Active State) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-square w-5 h-5 stroke-[1.5]">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Create Case
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <!-- Settings -->
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-5 h-5 stroke-[1.5]">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.72l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.72l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+            Settings
+          </span>
+        </button>
+        <!-- Profile -->
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 w-full min-h-screen">
+      
+      <!-- Create Case Flow -->
+      <main class="flex-1 w-full max-w-4xl mx-auto py-12 px-6 lg:px-10 flex flex-col relative z-10">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <h1 class="text-2xl font-medium tracking-tight text-neutral-900">Create New Case</h1>
+            <p class="text-sm text-neutral-500 mt-1">Initialize a new matter in the Cox Protocol.</p>
+          </div>
+          <a href="#" class="text-xs font-medium text-neutral-400 hover:text-neutral-900 px-3 py-2 rounded-lg hover:bg-neutral-50 transition-colors">
+            Cancel and return
+          </a>
+        </div>
+
+        <!-- Progress Stepper -->
+        <div class="w-full border-b border-neutral-100 mb-10">
+          <div class="flex items-center gap-8 pb-4">
+            <!-- Step 1: Details (Active) -->
+            <div class="flex items-center gap-2 relative">
+              <div class="flex items-center justify-center w-6 h-6 rounded-full bg-[#FF5E00] text-white text-[10px] font-bold">
+                1
+              </div>
+              <span class="text-sm font-medium text-[#FF5E00]">Case Details</span>
+              <div class="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-[#FF5E00]"></div>
+            </div>
+
+            <!-- Connector -->
+            <div class="text-neutral-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </div>
+
+            <!-- Step 2: Upload -->
+            <div class="flex items-center gap-2 group cursor-not-allowed opacity-40">
+              <div class="flex items-center justify-center w-6 h-6 rounded-full border border-neutral-300 text-neutral-400 text-[10px] font-bold">
+                2
+              </div>
+              <span class="text-sm font-medium text-neutral-500">Upload Documents</span>
+            </div>
+
+            <!-- Connector -->
+            <div class="text-neutral-200 opacity-40">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </div>
+
+            <!-- Step 3: Review -->
+            <div class="flex items-center gap-2 group cursor-not-allowed opacity-40">
+              <div class="flex items-center justify-center w-6 h-6 rounded-full border border-neutral-300 text-neutral-400 text-[10px] font-bold">
+                3
+              </div>
+              <span class="text-sm font-medium text-neutral-500">Review</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Form -->
+        <form class="space-y-8 pb-20">
+          
+          <!-- Section: Core Info -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Case Name -->
+            <div class="col-span-1 md:col-span-2">
+              <label for="case_name" class="block text-xs font-medium text-neutral-700 mb-2">
+                Case Name <span class="text-red-500">*</span>
+              </label>
+              <div class="relative group">
+                <input type="text" id="case_name" placeholder="e.g., Chicas v. Amazon" class="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#FF5E00]/10 focus:border-[#FF5E00] transition-all placeholder:text-neutral-400">
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300">
+                   <iconify-icon icon="solar:pen-new-square-linear" class="text-[#FF5E00]" width="18" height="18"></iconify-icon>
+                </div>
+              </div>
+            </div>
+
+            <!-- Client / Defendant -->
+            <div class="col-span-1 md:col-span-2">
+              <label for="client_name" class="block text-xs font-medium text-neutral-700 mb-2">
+                Client / Defendant <span class="text-red-500">*</span>
+              </label>
+              <input type="text" id="client_name" placeholder="e.g., Amazon, Inc." class="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#FF5E00]/10 focus:border-[#FF5E00] transition-all placeholder:text-neutral-400">
+            </div>
+          </div>
+
+          <div class="h-[1px] bg-neutral-100 w-full"></div>
+
+          <!-- Section: Jurisdiction -->
+          <div class="space-y-6">
+            <div class="">
+              <label class="block text-xs font-medium text-neutral-700 mb-3">Court Type</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Option 1: State -->
+                <label class="cursor-pointer group relative">
+                  <input type="radio" name="court_type" class="custom-radio peer sr-only" checked="">
+                  <div class="flex items-center gap-4 p-4 rounded-xl border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-200">
+                    <div class="w-5 h-5 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white transition-all duration-200"></div>
+                    <div class="flex flex-col">
+                      <span class="text-sm font-medium text-neutral-900">State Court</span>
+                      <span class="text-[11px] text-neutral-500">Superior or Circuit Courts</span>
+                    </div>
+                    <div class="ml-auto text-neutral-400 peer-checked:text-[#FF5E00]">
+                       <iconify-icon icon="solar:city-linear" width="20" height="20"></iconify-icon>
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Option 2: Federal -->
+                <label class="cursor-pointer group relative">
+                  <input type="radio" name="court_type" class="custom-radio peer sr-only">
+                  <div class="flex items-center gap-4 p-4 rounded-xl border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-200">
+                    <div class="w-5 h-5 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white transition-all duration-200"></div>
+                    <div class="flex flex-col">
+                      <span class="text-sm font-medium text-neutral-900">Federal Court</span>
+                      <span class="text-[11px] text-neutral-500">District Courts</span>
+                    </div>
+                    <div class="ml-auto text-neutral-400 peer-checked:text-[#FF5E00]">
+                       <iconify-icon icon="solar:scale-linear" width="20" height="20"></iconify-icon>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Specific Court Dropdown -->
+              <div class="col-span-1">
+                <label class="block text-xs font-medium text-neutral-700 mb-2">Court</label>
+                <details class="relative group">
+                  <summary class="list-none cursor-pointer">
+                    <div class="flex items-center justify-between w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-900 hover:border-neutral-300 transition-all">
+                      <span class="text-neutral-500">Select or search for court...</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down chevron text-neutral-400 transition-transform duration-200">
+                        <path d="m6 9 6 6 6-6"></path>
+                      </svg>
+                    </div>
+                  </summary>
+                  <div class="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div class="p-2 border-b border-neutral-100">
+                      <input type="text" placeholder="Search..." class="w-full px-2 py-1.5 text-xs bg-neutral-50 rounded border-none focus:ring-0 focus:outline-none">
+                    </div>
+                    <div class="max-h-48 overflow-y-auto py-1">
+                      <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Northern District of California</div>
+                      <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Central District of California</div>
+                      <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Southern District of New York</div>
+                      <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Los Angeles Superior Court</div>
+                      <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">San Francisco Superior Court</div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <!-- Substantive Law State -->
+              <div class="col-span-1">
+                <label class="block text-xs font-medium text-neutral-700 mb-1">Substantive Law State</label>
+                
+                <details class="relative group">
+                  <summary class="list-none cursor-pointer">
+                    <div class="flex items-center justify-between w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-900 hover:border-neutral-300 transition-all">
+                      <span class="text-neutral-500">Select state...</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down chevron text-neutral-400 transition-transform duration-200">
+                        <path d="m6 9 6 6 6-6"></path>
+                      </svg>
+                    </div>
+                  </summary>
+                  <div class="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-xl overflow-hidden max-h-48 overflow-y-auto">
+                    <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">California</div>
+                    <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">New York</div>
+                    <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Delaware</div>
+                    <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Texas</div>
+                    <div class="px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5E00] cursor-pointer">Florida</div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="h-[1px] bg-neutral-100 w-full"></div>
+
+          <!-- Section: Case Specifics -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Certification Stage -->
+            <div>
+              <label class="block text-xs font-medium text-neutral-700 mb-3">Certification Stage</label>
+              <div class="flex flex-col gap-3">
+                <label class="cursor-pointer group">
+                  <input type="radio" name="cert_stage" class="custom-radio peer sr-only" checked="">
+                  <div class="flex items-center gap-3 p-3 rounded-lg border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:bg-neutral-50 transition-all">
+                    <div class="w-4 h-4 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white"></div>
+                    <span class="text-sm text-neutral-700">Pre-Certification</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer group">
+                  <input type="radio" name="cert_stage" class="custom-radio peer sr-only">
+                  <div class="flex items-center gap-3 p-3 rounded-lg border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:bg-neutral-50 transition-all">
+                    <div class="w-4 h-4 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white"></div>
+                    <span class="text-sm text-neutral-700">Post-Certification</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Response Type -->
+            <div>
+              <label class="block text-xs font-medium text-neutral-700 mb-3">Response Type</label>
+              <div class="flex flex-col gap-3">
+                <label class="cursor-pointer group">
+                  <input type="radio" name="response_type" class="custom-radio peer sr-only" checked="">
+                  <div class="flex items-center gap-3 p-3 rounded-lg border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:bg-neutral-50 transition-all">
+                    <div class="w-4 h-4 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white"></div>
+                    <span class="text-sm text-neutral-700">Initial Response</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer group">
+                  <input type="radio" name="response_type" class="custom-radio peer sr-only">
+                  <div class="flex items-center gap-3 p-3 rounded-lg border border-neutral-200 peer-checked:border-[#FF5E00] peer-checked:bg-[#FF5E00]/5 hover:bg-neutral-50 transition-all">
+                    <div class="w-4 h-4 rounded-full border border-neutral-300 radio-circle flex-shrink-0 bg-white"></div>
+                    <span class="text-sm text-neutral-700">Supplemental Response</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Floating Bottom Actions -->
+        <div class="fixed bottom-0 left-0 lg:left-[72px] right-0 p-4 bg-white/80 backdrop-blur-lg border-t border-neutral-200 z-40 flex items-center justify-between px-6 lg:px-10">
+          <button class="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors px-4 py-2 rounded-lg hover:bg-neutral-100">
+            Save as Draft
+          </button>
+          
+          <button class="group flex items-center gap-2 bg-[#FF5E00] hover:bg-[#e55500] text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-[#FF5E00]/20 hover:shadow-[#FF5E00]/40">
+            <span>Continue to Upload</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right group-hover:translate-x-0.5 transition-transform">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+  
+</body></html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Cases</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Iconify Icons -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #ffffff;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar for main content */
+.no-scrollbar::-webkit-scrollbar {
+display: none;
+}
+.no-scrollbar {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+/* Sidebar Expansion Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+/* Sidebar Items */
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header {
+padding-left: 1rem;
+padding-right: 1rem;
+justify-content: space-between;
+}
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Animations */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+/* Custom Form Inputs */
+.custom-select {
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+background-position: right 0.5rem center;
+background-repeat: no-repeat;
+background-size: 1.5em 1.5em;
+padding-right: 2.5rem;
+appearance: none;
+}
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+<body class="min-h-screen overflow-x-hidden selection:bg-[#FF5E00] selection:text-white relative bg-white text-neutral-900 flex">
+
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
+    </div>
+
+    <!-- Left Sidebar (Global Navigation) -->
+    <nav class="fixed z-50 flex flex-col bg-white/80 w-[72px] border-neutral-100/80 border-r pt-6 pb-6 top-0 bottom-0 left-0 backdrop-blur-xl justify-between" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+                <iconify-icon icon="solar:fire-bold-duotone" width="28" height="28"></iconify-icon>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+                <iconify-icon icon="solar:sidebar-minimalistic-linear" width="20" height="20"></iconify-icon>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <iconify-icon icon="solar:sidebar-minimalistic-linear" width="20" height="20" rotate="180deg"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Cases (Active) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <iconify-icon icon="solar:case-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Cases</span>
+          </a>
+          <!-- The Vault -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:folder-with-files-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">The Vault</span>
+          </a>
+           <!-- Calendar -->
+           <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:calendar-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Calendar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <!-- Settings -->
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:settings-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+          <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Settings</span>
+        </button>
+        <!-- Profile -->
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 h-screen w-full">
+        
+        <!-- Main Content -->
+        <main class="flex-1 w-full max-w-[1600px] mx-auto py-8 px-8 lg:px-12 flex flex-col relative z-10 h-full overflow-y-auto no-scrollbar">
+            
+            <!-- Page Header -->
+            <div class="flex flex-col gap-6 mb-8">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-semibold text-neutral-900 tracking-tight">Cases</h1>
+                    <button class="group flex items-center gap-2 bg-[#FF5E00] hover:bg-[#FF5E00]/90 text-white pl-3 pr-4 py-2 rounded-lg text-sm font-medium transition-all shadow-[0_2px_10px_rgba(255,94,0,0.2)] hover:shadow-[0_4px_16px_rgba(255,94,0,0.3)]">
+                        <iconify-icon icon="solar:add-circle-linear" width="20" height="20"></iconify-icon>
+                        <span>Create New Case</span>
+                    </button>
+                </div>
+                
+                <!-- Controls Row -->
+                <div class="flex items-center gap-3 w-full">
+                    <!-- Search -->
+                    <div class="relative flex-1 group">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-neutral-600 transition-colors">
+                            <iconify-icon icon="solar:magnifer-linear" width="18" height="18"></iconify-icon>
+                        </div>
+                        <input type="text" placeholder="Search cases..." class="w-full bg-neutral-50 hover:bg-neutral-100 focus:bg-white border border-transparent focus:border-neutral-200 rounded-lg py-2 pl-10 pr-4 text-sm outline-none transition-all placeholder:text-neutral-400 text-neutral-900">
+                    </div>
+                    
+                    <div class="h-6 w-[1px] bg-neutral-200 mx-1"></div>
+                    
+                    <!-- Filters -->
+                    <div class="relative min-w-[140px]">
+                        <select class="custom-select w-full appearance-none bg-white border border-neutral-200 hover:border-neutral-300 text-neutral-700 text-sm rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-neutral-100 transition-all font-medium">
+                            <option>All Cases</option>
+                            <option>Active</option>
+                            <option>Archived</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Sort -->
+                    <div class="relative min-w-[160px]">
+                        <select class="custom-select w-full appearance-none bg-white border border-neutral-200 hover:border-neutral-300 text-neutral-700 text-sm rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-neutral-100 transition-all font-medium">
+                            <option>Sort by: Last Modified</option>
+                            <option>Sort by: Date Created</option>
+                            <option>Sort by: Case Name</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cases List -->
+            <div class="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden flex-grow mb-8 min-h-[400px]">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-neutral-100 bg-neutral-50/50 text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                            <th class="py-3 px-6 w-[25%]">Case Name</th>
+                            <th class="py-3 px-6 w-[15%]">Client</th>
+                            <th class="py-3 px-6 w-[10%]">Court</th>
+                            <th class="py-3 px-6 w-[15%]">Stage</th>
+                            <th class="py-3 px-6 w-[15%]">Last Modified</th>
+                            <th class="py-3 px-6 w-[15%] text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-100">
+                        <!-- Item 1 -->
+                        <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer">
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded bg-orange-50 text-[#FF5E00] flex items-center justify-center shrink-0">
+                                        <iconify-icon icon="solar:case-minimalistic-linear" width="16" height="16"></iconify-icon>
+                                    </div>
+                                    <span class="font-medium text-neutral-900 text-sm group-hover:text-[#FF5E00] transition-colors">Chicas v. Amazon</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Amazon, Inc.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 font-medium bg-neutral-100 px-2 py-1 rounded text-xs">N.D. Cal.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Pre-Certification</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 tabular-nums">Jan 28, 2026</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-medium border border-blue-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                                    In Progress
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Item 2 -->
+                        <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer">
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded bg-neutral-100 text-neutral-500 flex items-center justify-center shrink-0">
+                                        <iconify-icon icon="solar:case-minimalistic-linear" width="16" height="16"></iconify-icon>
+                                    </div>
+                                    <span class="font-medium text-neutral-900 text-sm group-hover:text-[#FF5E00] transition-colors">Martinez v. Walmart</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Walmart Inc.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 font-medium bg-neutral-100 px-2 py-1 rounded text-xs">C.D. Cal.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Post-Certification</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 tabular-nums">Jan 15, 2026</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 text-xs font-medium border border-yellow-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+                                    Awaiting Review
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Item 3 -->
+                        <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer">
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded bg-neutral-100 text-neutral-500 flex items-center justify-center shrink-0">
+                                        <iconify-icon icon="solar:case-minimalistic-linear" width="16" height="16"></iconify-icon>
+                                    </div>
+                                    <span class="font-medium text-neutral-900 text-sm group-hover:text-[#FF5E00] transition-colors">Johnson v. Target</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Target Corporation</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 font-medium bg-neutral-100 px-2 py-1 rounded text-xs">S.D.N.Y.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Pre-Certification</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 tabular-nums">Dec 20, 2025</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium border border-green-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-600"></div>
+                                    Completed
+                                </div>
+                            </td>
+                        </tr>
+
+                         <!-- Item 4 -->
+                         <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer">
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded bg-neutral-100 text-neutral-500 flex items-center justify-center shrink-0">
+                                        <iconify-icon icon="solar:case-minimalistic-linear" width="16" height="16"></iconify-icon>
+                                    </div>
+                                    <span class="font-medium text-neutral-900 text-sm group-hover:text-[#FF5E00] transition-colors">Williams v. Uber</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Uber Technologies</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 font-medium bg-neutral-100 px-2 py-1 rounded text-xs">N.D. Cal.</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-600">Pre-Certification</span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="text-sm text-neutral-500 tabular-nums">Dec 5, 2025</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium border border-green-100">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-600"></div>
+                                    Completed
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Empty Rows Filler (Visual Balance) -->
+                        <tr class="h-full">
+                            <td colspan="6" class="p-0 h-24"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Empty State (Hidden, available for logic) -->
+                <!-- 
+                <div class="hidden flex flex-col items-center justify-center py-20">
+                    <div class="w-16 h-16 bg-neutral-50 rounded-full flex items-center justify-center text-neutral-300 mb-4">
+                        <iconify-icon icon="solar:folder-error-linear" width="32" height="32"></iconify-icon>
+                    </div>
+                    <h3 class="text-neutral-900 font-medium mb-1">No cases yet</h3>
+                    <p class="text-neutral-500 text-sm mb-6">Create your first case to get started</p>
+                    <button class="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                        <iconify-icon icon="solar:add-circle-linear" width="18" height="18"></iconify-icon>
+                        <span>Create New Case</span>
+                    </button>
+                </div>
+                -->
+            </div>
+        </main>
+    </div>
+
+</body></html>

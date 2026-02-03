@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Policies &amp; Procedures</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Iconify -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #f5f5f5;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Sidebar Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header Triggers */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header { padding-left: 1rem; padding-right: 1rem; justify-content: space-between; }
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Text Transitions */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+body.has-expanded-sidebar .toggle-hints-wrapper { display: flex !important; }
+/* Custom Checkbox */
+.custom-checkbox {
+appearance: none;
+background-color: #fff;
+margin: 0;
+font: inherit;
+color: currentColor;
+width: 1.15em;
+height: 1.15em;
+border: 1px solid #d4d4d4;
+border-radius: 0.25em;
+display: grid;
+place-content: center;
+transition: 0.2s;
+}
+.custom-checkbox::before {
+content: "";
+width: 0.65em;
+height: 0.65em;
+transform: scale(0);
+transition: 0.1s transform ease-in-out;
+box-shadow: inset 1em 1em white;
+transform-origin: center;
+clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.custom-checkbox:checked {
+background-color: #FF5E00;
+border-color: #FF5E00;
+}
+.custom-checkbox:checked::before {
+transform: scale(1);
+}
+/* Highlight Class for terms */
+.highlight-term {
+background-color: #FEF3C7; /* Amber 100 */
+border-radius: 2px;
+padding: 0 2px;
+color: #92400E; /* Amber 800 */
+font-weight: 500;
+}
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+  <body class="h-screen overflow-hidden selection:bg-[#FF5E00] selection:text-white relative bg-[#FAFAFA] text-neutral-900 flex">
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/50"></div>
+    </div>
+
+    <!-- Zone 2: Left Sidebar (Global Navigation) -->
+    <nav class="fixed z-50 flex flex-col bg-white w-[72px] border-neutral-200 border-r pt-6 pb-6 top-0 bottom-0 left-0 justify-between shadow-sm" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fire">
+                <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path>
+              </svg>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <path d="M9 3v18"></path>
+                <path d="m14 9 3 3-3 3"></path>
+              </svg>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M9 3v18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Dashboard -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard w-5 h-5 stroke-[1.5]">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Command Center
+            </span>
+          </a>
+          <!-- The Vault -->
+          <a href="#vault" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed w-5 h-5 stroke-[1.5]">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+            </svg>
+            <div class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 shadow-lg transition-opacity duration-300 text-xs flex items-center gap-2">
+              The Vault
+            </div>
+          </a>
+          <!-- New Case (Active State) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-square w-5 h-5 stroke-[1.5]">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Create Case
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <!-- Settings -->
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-5 h-5 stroke-[1.5]">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.72l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.72l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+            Settings
+          </span>
+        </button>
+        <!-- Profile -->
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 w-full h-full flex-col">
+      
+      <!-- Top Header Area (Fixed) -->
+      <header class="bg-[#FAFAFA] border-b border-neutral-200 px-6 py-5 shrink-0 z-20">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-xs text-neutral-500 mb-2 font-medium">
+             <span>Cases</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span class="">Chicas v. Amazon</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span class="">Categories</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span class="text-neutral-900">Policies &amp; Procedures</span>
+        </div>
+        
+        <div class="flex items-end justify-between">
+          <div class="flex flex-col gap-1">
+            <h1 class="text-xl font-semibold tracking-tight text-neutral-900 flex items-center gap-2">
+              Policies &amp; Procedures
+              <span class="text-xs font-normal text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-200">34 requests</span>
+            </h1>
+          </div>
+          <div class="flex gap-2">
+             <button class="text-xs font-medium text-neutral-600 hover:text-neutral-900 px-3 py-1.5 rounded hover:bg-neutral-100 transition-colors flex items-center gap-1.5">
+               <iconify-icon icon="solar:arrow-left-linear"></iconify-icon> Back to Categories
+             </button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex items-center gap-2 mt-6 overflow-x-auto no-scrollbar pb-1">
+          <button class="bg-neutral-900 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">
+            All (34)
+          </button>
+          <button class="bg-white hover:bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-200 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition-all">
+            Meal &amp; Rest Break (12)
+          </button>
+          <button class="bg-white hover:bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-200 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition-all">
+            Overtime (8)
+          </button>
+          <button class="bg-white hover:bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-200 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition-all">
+            Minimum Wage (6)
+          </button>
+          <button class="bg-white hover:bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-200 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition-all">
+            Paycheck / Pay Period (5)
+          </button>
+          <button class="bg-white hover:bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-200 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition-all">
+            General Employment (3)
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Split View Area -->
+      <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- Left: List View -->
+        <div class="flex-1 overflow-y-auto bg-white min-w-0 pb-20">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-neutral-50 border-b border-neutral-200 text-xs text-neutral-500 font-medium uppercase tracking-wide sticky top-0 z-10 backdrop-blur-sm bg-neutral-50/90">
+              <tr>
+                <th class="w-10 px-4 py-3 text-center border-b border-neutral-200">
+                  <input type="checkbox" class="custom-checkbox">
+                </th>
+                <th class="px-4 py-3 w-20 border-b border-neutral-200">ID</th>
+                <th class="px-2 py-3 w-16 border-b border-neutral-200">Type</th>
+                <th class="px-4 py-3 border-b border-neutral-200">Request Text</th>
+                <th class="px-4 py-3 w-32 border-b border-neutral-200">Sub-Category</th>
+                <th class="px-4 py-3 w-24 border-b border-neutral-200">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-neutral-100 text-sm">
+              <!-- Row 1: Active/Selected -->
+              <tr class="group bg-blue-50/50 hover:bg-blue-50 transition-colors cursor-pointer border-l-2 border-l-[#FF5E00]">
+                <td class="px-4 py-3 text-center">
+                   <input type="checkbox" class="custom-checkbox" checked="">
+                </td>
+                <td class="px-4 py-3 font-medium text-neutral-900 text-xs">RFP 1</td>
+                <td class="px-2 py-3 text-xs text-neutral-500">RFP</td>
+                <td class="px-4 py-3 text-neutral-700">All DOCUMENTS reflecting DEFENDANT's policies regarding meal periods...</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">
+                    Meal &amp; Rest Break
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                   <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-medium border border-amber-100">
+                     Pending
+                   </span>
+                </td>
+              </tr>
+              
+              <!-- Row 2 -->
+              <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer border-l-2 border-l-transparent">
+                <td class="px-4 py-3 text-center">
+                   <input type="checkbox" class="custom-checkbox" checked="">
+                </td>
+                <td class="px-4 py-3 font-medium text-neutral-900 text-xs">RFP 2</td>
+                <td class="px-2 py-3 text-xs text-neutral-500">RFP</td>
+                <td class="px-4 py-3 text-neutral-700">All DOCUMENTS reflecting DEFENDANT's policies regarding rest breaks...</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">
+                    Meal &amp; Rest Break
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                   <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-medium border border-amber-100">
+                     Pending
+                   </span>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer border-l-2 border-l-transparent">
+                <td class="px-4 py-3 text-center">
+                   <input type="checkbox" class="custom-checkbox" checked="">
+                </td>
+                <td class="px-4 py-3 font-medium text-neutral-900 text-xs">RFP 12</td>
+                <td class="px-2 py-3 text-xs text-neutral-500">RFP</td>
+                <td class="px-4 py-3 text-neutral-700">All DOCUMENTS reflecting DEFENDANT's methodology for calculating overtime...</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">
+                    Overtime
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                   <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-medium border border-amber-100">
+                     Pending
+                   </span>
+                </td>
+              </tr>
+              
+              <!-- Row 4 -->
+              <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer border-l-2 border-l-transparent">
+                <td class="px-4 py-3 text-center">
+                   <input type="checkbox" class="custom-checkbox">
+                </td>
+                <td class="px-4 py-3 font-medium text-neutral-900 text-xs">ROG 3</td>
+                <td class="px-2 py-3 text-xs text-neutral-500">ROG</td>
+                <td class="px-4 py-3 text-neutral-700">IDENTIFY all versions of employee handbooks in effect during the CLASS PERIOD...</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">
+                    General Employment
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                   <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-medium border border-emerald-100">
+                     Draft Ready
+                   </span>
+                </td>
+              </tr>
+              
+              <!-- Filler rows to show scroll behavior -->
+              <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer border-l-2 border-l-transparent opacity-50">
+                 <td class="px-4 py-3 text-center"><input type="checkbox" class="custom-checkbox"></td>
+                 <td class="px-4 py-3 font-medium text-neutral-900 text-xs">RFP 15</td>
+                 <td class="px-2 py-3 text-xs text-neutral-500">RFP</td>
+                 <td class="px-4 py-3 text-neutral-700">Any and all payroll records for Plaintiff Chicas...</td>
+                 <td class="px-4 py-3"><span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">Paycheck</span></td>
+                 <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-medium border border-amber-100">Pending</span></td>
+              </tr>
+              <tr class="group hover:bg-neutral-50 transition-colors cursor-pointer border-l-2 border-l-transparent opacity-50">
+                 <td class="px-4 py-3 text-center"><input type="checkbox" class="custom-checkbox"></td>
+                 <td class="px-4 py-3 font-medium text-neutral-900 text-xs">RFP 16</td>
+                 <td class="px-2 py-3 text-xs text-neutral-500">RFP</td>
+                 <td class="px-4 py-3 text-neutral-700">Documents sufficient to identify the pay periods...</td>
+                 <td class="px-4 py-3"><span class="inline-flex px-2 py-1 rounded bg-neutral-100 text-neutral-600 text-[10px] font-medium border border-neutral-200 whitespace-nowrap">Paycheck</span></td>
+                 <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-medium border border-amber-100">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Right: Detail Panel -->
+        <div class="w-[450px] bg-white border-l border-neutral-200 overflow-y-auto pb-20 flex flex-col shadow-[rgba(0,0,0,0.05)_0px_0px_20px_0px] z-10">
+          
+          <!-- Detail Header -->
+          <div class="p-6 border-b border-neutral-100 flex flex-col gap-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <h2 class="text-sm font-bold text-neutral-900 flex items-center gap-2">
+                  <iconify-icon icon="solar:document-text-linear" class="text-neutral-500"></iconify-icon>
+                  RFP 1
+                </h2>
+                <p class="text-xs text-neutral-500 mt-1">Policies &amp; Procedures</p>
+              </div>
+              <div class="flex gap-2">
+                <button class="text-neutral-400 hover:text-neutral-600"><iconify-icon icon="solar:pen-linear" width="16"></iconify-icon></button>
+                <button class="text-neutral-400 hover:text-neutral-600"><iconify-icon icon="solar:menu-dots-bold" width="16"></iconify-icon></button>
+              </div>
+            </div>
+            
+            <!-- Source Card -->
+            <div class="bg-neutral-50 rounded-lg p-3 border border-neutral-100">
+               <div class="flex items-center gap-2 mb-1">
+                 <iconify-icon icon="solar:scale-linear" class="text-blue-500" width="14"></iconify-icon>
+                 <span class="text-[10px] font-semibold text-neutral-900 uppercase tracking-wide">Source Document</span>
+               </div>
+               <p class="text-xs text-neutral-600 leading-relaxed">
+                 Plaintiffs' First Set of Requests for Production, Request No. 1
+               </p>
+            </div>
+          </div>
+
+          <!-- Detail Content -->
+          <div class="p-6 flex flex-col gap-6">
+            
+            <!-- Full Text -->
+            <div>
+              <h3 class="text-xs font-semibold text-neutral-900 uppercase tracking-wide mb-3">Full Request Text</h3>
+              <div class="text-sm text-neutral-800 leading-7 font-serif border-l-2 border-[#FF5E00]/20 pl-4">
+                All <span class="highlight-term">DOCUMENTS</span> reflecting DEFENDANT's policies regarding <span class="highlight-term">meal periods</span> for non-exempt employees in California during the <span class="highlight-term">CLASS PERIOD</span>, including but not limited to any waivers, attestation forms, or scheduling guidelines.
+              </div>
+            </div>
+
+            <!-- Context/Complaint -->
+            <div class="flex items-start gap-3 p-3 bg-blue-50/50 border border-blue-100 rounded-lg">
+               <div class="shrink-0 mt-0.5 text-blue-600">
+                 <iconify-icon icon="solar:info-circle-linear" width="16"></iconify-icon>
+               </div>
+               <div>
+                 <p class="text-xs font-medium text-blue-900">Context</p>
+                 <p class="text-xs text-blue-700 mt-0.5">Related to Complaint ¶¶ 23-27 (meal period claims). <br><span class="italic opacity-80">"Plaintiff alleges Defendant failed to provide timely first meal periods..."</span></p>
+               </div>
+            </div>
+            
+            <hr class="border-neutral-100">
+
+            <!-- Controls -->
+            <div class="space-y-5">
+              
+              <!-- Sub Category Edit -->
+              <div class="space-y-1.5">
+                <label class="text-xs font-medium text-neutral-700">Sub-Category</label>
+                <div class="relative">
+                  <select class="appearance-none w-full bg-white border border-neutral-200 text-neutral-900 text-xs rounded-lg p-2.5 pr-8 focus:ring-[#FF5E00] focus:border-[#FF5E00] shadow-sm cursor-pointer hover:border-neutral-300 transition-colors">
+                    <option selected="">Meal &amp; Rest Break Policies</option>
+                    <option>Overtime Policies</option>
+                    <option>Minimum Wage Policies</option>
+                    <option>General Employment</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-neutral-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Flag -->
+              <div class="flex items-center gap-3">
+                 <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer">
+                  <div class="w-9 h-5 bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#FF5E00]/20 rounded-full peer dark:bg-neutral-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FF5E00]"></div>
+                </label>
+                <span class="text-xs font-medium text-neutral-700">Flag for Individual Response</span>
+              </div>
+              
+              <!-- Notes -->
+              <div class="space-y-1.5">
+                <label class="text-xs font-medium text-neutral-700">Review Notes</label>
+                <textarea rows="3" class="block p-2.5 w-full text-xs text-neutral-900 bg-neutral-50 rounded-lg border border-neutral-200 focus:ring-[#FF5E00] focus:border-[#FF5E00] placeholder-neutral-400" placeholder="Add a note for the drafting team..."></textarea>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Action Bar -->
+      <div class="absolute bottom-0 left-[72px] right-0 p-4 bg-white/95 backdrop-blur border-t border-neutral-200 z-50 flex items-center justify-between px-6">
+        <div class="text-xs text-neutral-500 font-medium">
+          <span class="text-neutral-900">3 requests selected</span> for configuration.
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <button class="text-xs font-medium text-neutral-500 hover:text-neutral-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100">
+            Skip Category
+          </button>
+          <button class="group flex items-center gap-2 bg-[#FF5E00] hover:bg-[#e55500] text-white px-5 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-[#FF5E00]/20 hover:shadow-[#FF5E00]/40">
+            <span>Configure Response for This Category</span>
+            <iconify-icon icon="solar:arrow-right-linear" width="16" class="group-hover:translate-x-0.5 transition-transform"></iconify-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+  
+</body></html>

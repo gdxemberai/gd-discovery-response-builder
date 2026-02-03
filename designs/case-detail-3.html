@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Processing Documents</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Iconify -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #ffffff;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Sidebar Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header Triggers */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header { padding-left: 1rem; padding-right: 1rem; justify-content: space-between; }
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Text Transitions */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+body.has-expanded-sidebar .toggle-hints-wrapper { display: flex !important; }
+/* Processing Animations */
+@keyframes pulseslow {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.5; }
+}
+.animate-pulse-slow {
+animation: pulseslow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.processing-line-gradient {
+background: linear-gradient(to bottom, #10b981 0%, #10b981 40%, #FF5E00 40%, #FF5E00 60%, #e5e5e5 60%, #e5e5e5 100%);
+}
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+  <body class="min-h-screen overflow-x-hidden selection:bg-[#FF5E00] selection:text-white relative bg-white text-neutral-900 flex">
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
+    </div>
+
+    <!-- Zone 2: Left Sidebar (Global Navigation) -->
+    <nav class="fixed z-50 flex flex-col bg-white/80 w-[72px] border-neutral-100/80 border-r pt-6 pb-6 top-0 bottom-0 left-0 backdrop-blur-xl justify-between" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fire">
+                <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path>
+              </svg>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <path d="M9 3v18"></path>
+                <path d="m14 9 3 3-3 3"></path>
+              </svg>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M9 3v18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Dashboard -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard w-5 h-5 stroke-[1.5]">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Command Center
+            </span>
+          </a>
+          <!-- The Vault -->
+          <a href="#vault" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed w-5 h-5 stroke-[1.5]">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+            </svg>
+            <div class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 shadow-lg transition-opacity duration-300 text-xs flex items-center gap-2">
+              The Vault
+            </div>
+          </a>
+          <!-- New Case (Active State) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-square w-5 h-5 stroke-[1.5]">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Create Case
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <!-- Settings -->
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-5 h-5 stroke-[1.5]">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.72l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.72l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+            Settings
+          </span>
+        </button>
+        <!-- Profile -->
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 w-full min-h-screen items-center justify-center">
+      
+      <!-- Processing Flow -->
+      <main class="w-full max-w-2xl mx-auto py-12 px-6 flex flex-col relative z-10">
+        
+        <!-- Breadcrumb & Header -->
+        <div class="mb-12 text-center">
+          <div class="flex items-center justify-center gap-2 text-xs text-neutral-500 mb-4 font-medium">
+             <span>Cases</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span>Chicas v. Amazon</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span class="text-neutral-900">Processing</span>
+          </div>
+          <h1 class="text-3xl font-medium tracking-tight text-neutral-900 mb-2">Processing Documents</h1>
+          <p class="text-neutral-500">Chicas v. Amazon</p>
+        </div>
+
+        <!-- Processing Card -->
+        <div class="bg-white/60 backdrop-blur-sm border border-neutral-200 rounded-2xl shadow-sm p-8 sm:p-10 relative overflow-hidden">
+          
+          <!-- Background Decoration -->
+          <div class="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+             <iconify-icon icon="solar:server-square-linear" width="160" height="160"></iconify-icon>
+          </div>
+
+          <!-- Vertical Timeline -->
+          <div class="relative space-y-0">
+            
+            <!-- Step 1: Completed -->
+            <div class="flex gap-4 relative pb-10">
+               <!-- Vertical Line -->
+               <div class="absolute top-8 left-[11px] bottom-0 w-0.5 bg-emerald-100 z-0"></div>
+               
+               <div class="relative z-10 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 ring-4 ring-white">
+                 <iconify-icon icon="solar:check-read-linear" stroke-width="3" width="14"></iconify-icon>
+               </div>
+               <div class="flex flex-col pt-0.5">
+                 <span class="text-sm font-medium text-emerald-700">Uploading documents...</span>
+               </div>
+            </div>
+
+            <!-- Step 2: In Progress -->
+            <div class="flex gap-4 relative pb-10">
+               <!-- Vertical Line -->
+               <div class="absolute top-8 left-[11px] bottom-0 w-0.5 bg-neutral-100 z-0"></div>
+               
+               <div class="relative z-10 w-6 h-6 rounded-full bg-[#FF5E00] text-white flex items-center justify-center shrink-0 ring-4 ring-white shadow-lg shadow-[#FF5E00]/20">
+                 <iconify-icon icon="solar:spinner-linear" class="animate-spin" width="14"></iconify-icon>
+               </div>
+               <div class="flex flex-col pt-0.5 w-full">
+                 <span class="text-sm font-semibold text-neutral-900">Extracting individual requests...</span>
+                 
+                 <!-- Live Counter/Status Box -->
+                 <div class="mt-3 bg-neutral-50 rounded-lg border border-neutral-100 p-3 flex items-center justify-between animate-pulse-slow">
+                    <div class="flex items-center gap-2">
+                       <div class="w-1.5 h-1.5 rounded-full bg-[#FF5E00] animate-pulse"></div>
+                       <span class="text-xs font-medium text-neutral-700">127 requests found so far...</span>
+                    </div>
+                    <span class="text-[10px] text-neutral-400 font-mono">LIVE</span>
+                 </div>
+                 
+                 <div class="flex items-center gap-1.5 mt-2 text-xs text-neutral-400">
+                    <iconify-icon icon="solar:clock-circle-linear" width="12"></iconify-icon>
+                    <span>Estimated time remaining: 2-3 minutes</span>
+                 </div>
+               </div>
+            </div>
+
+            <!-- Step 3: Pending -->
+            <div class="flex gap-4 relative pb-10">
+               <!-- Vertical Line -->
+               <div class="absolute top-8 left-[11px] bottom-0 w-0.5 bg-neutral-100 z-0"></div>
+               
+               <div class="relative z-10 w-6 h-6 rounded-full bg-white border-2 border-neutral-200 flex items-center justify-center shrink-0 ring-4 ring-white">
+               </div>
+               <div class="flex flex-col pt-0.5">
+                 <span class="text-sm text-neutral-400">Identifying defined terms...</span>
+               </div>
+            </div>
+
+            <!-- Step 4: Pending -->
+            <div class="flex gap-4 relative pb-10">
+               <!-- Vertical Line -->
+               <div class="absolute top-8 left-[11px] bottom-0 w-0.5 bg-neutral-100 z-0"></div>
+               
+               <div class="relative z-10 w-6 h-6 rounded-full bg-white border-2 border-neutral-200 flex items-center justify-center shrink-0 ring-4 ring-white">
+               </div>
+               <div class="flex flex-col pt-0.5">
+                 <span class="text-sm text-neutral-400">Categorizing requests into topics...</span>
+               </div>
+            </div>
+
+            <!-- Step 5: Pending -->
+            <div class="flex gap-4 relative">
+               <div class="relative z-10 w-6 h-6 rounded-full bg-white border-2 border-neutral-200 flex items-center justify-center shrink-0 ring-4 ring-white">
+               </div>
+               <div class="flex flex-col pt-0.5">
+                 <span class="text-sm text-neutral-400">Cross-referencing with complaint...</span>
+               </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Cancel Link -->
+        <div class="mt-8 text-center">
+          <a href="#" class="text-sm text-neutral-400 hover:text-red-500 transition-colors inline-flex items-center gap-2 group">
+             <iconify-icon icon="solar:close-circle-linear" class="group-hover:rotate-90 transition-transform"></iconify-icon>
+             Cancel Processing
+          </a>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+  
+</body></html>

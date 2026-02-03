@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Chicas v. Amazon</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Iconify Icons -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #ffffff;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar for main content */
+.no-scrollbar::-webkit-scrollbar {
+display: none;
+}
+.no-scrollbar {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+/* Sidebar Expansion Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+/* Sidebar Items */
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header {
+padding-left: 1rem;
+padding-right: 1rem;
+justify-content: space-between;
+}
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Animations */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+/* Dashed Border Utility */
+.dashed-border {
+background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23E5E5E5FF' stroke-width='1' stroke-dasharray='6%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+<body class="min-h-screen overflow-x-hidden selection:bg-[#FF5E00] selection:text-white relative bg-white text-neutral-900 flex">
+
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
+    </div>
+
+    <!-- Left Sidebar (Global Navigation) -->
+    <nav class="fixed z-50 flex flex-col bg-white/80 w-[72px] border-neutral-100/80 border-r pt-6 pb-6 top-0 bottom-0 left-0 backdrop-blur-xl justify-between" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+                <iconify-icon icon="solar:fire-bold-duotone" width="28" height="28"></iconify-icon>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+                <iconify-icon icon="solar:sidebar-minimalistic-linear" width="20" height="20"></iconify-icon>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <iconify-icon icon="solar:sidebar-minimalistic-linear" width="20" height="20" rotate="180deg"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Cases (Active) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <iconify-icon icon="solar:case-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Cases</span>
+          </a>
+          <!-- The Vault -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:folder-with-files-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">The Vault</span>
+          </a>
+           <!-- Calendar -->
+           <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:calendar-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Calendar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <!-- Settings -->
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <iconify-icon icon="solar:settings-linear" width="24" height="24" class="stroke-[1.5]"></iconify-icon>
+          <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">Settings</span>
+        </button>
+        <!-- Profile -->
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 h-screen w-full">
+        
+        <!-- Main Content -->
+        <main class="flex-1 w-full max-w-[1600px] mx-auto py-8 px-8 lg:px-12 flex flex-col relative z-10 h-full overflow-y-auto no-scrollbar">
+            
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-2 text-xs text-neutral-400 mb-6">
+                <a href="#" class="hover:text-neutral-900 transition-colors">Cases</a>
+                <iconify-icon icon="solar:alt-arrow-right-linear" width="12" height="12"></iconify-icon>
+                <span class="text-neutral-900 font-medium">Overview</span>
+            </div>
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-3">
+                        <h1 class="text-3xl font-semibold text-neutral-900 tracking-tight">Chicas v. Amazon</h1>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-medium border border-blue-100">
+                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                            In Progress
+                        </div>
+                    </div>
+                    <p class="text-neutral-500 text-sm">Last modified on February 3, 2026</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-8">
+                <!-- Left Column (Main) -->
+                <div class="col-span-12 xl:col-span-8 flex flex-col gap-8">
+                    
+                    <!-- Case Details Card -->
+                    <section class="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden">
+                        <div class="flex items-center justify-between p-5 border-b border-neutral-100">
+                            <h2 class="text-sm font-semibold text-neutral-900">Case Details</h2>
+                            <button class="text-xs font-medium text-neutral-500 hover:text-[#FF5E00] transition-colors flex items-center gap-1">
+                                <iconify-icon icon="solar:pen-linear" width="14" height="14"></iconify-icon>
+                                Edit Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 p-6">
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Client</span>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600">
+                                        <iconify-icon icon="solar:buildings-linear" width="12" height="12"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm font-medium text-neutral-900">Amazon, Inc.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Court</span>
+                                <span class="text-sm font-medium text-neutral-900">Northern District of California</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Court Type</span>
+                                <span class="text-sm font-medium text-neutral-900">Federal</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Substantive Law</span>
+                                <span class="text-sm font-medium text-neutral-900">California</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Stage</span>
+                                <span class="inline-flex px-2 py-0.5 rounded bg-neutral-100 text-neutral-600 text-xs font-medium">Pre-Certification</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs text-neutral-400 mb-1">Response Type</span>
+                                <span class="text-sm font-medium text-neutral-900">Initial</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Discovery Summary -->
+                    <section class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-sm font-semibold text-neutral-900">Discovery Requests Summary</h2>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                            <!-- Item -->
+                            <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Policies</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">34</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Pay Data</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">28</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Time Data</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">24</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Personnel</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">18</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Class Lists</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">8</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium whitespace-nowrap">Comms</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">12</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                             <!-- Item -->
+                             <div class="bg-white border border-neutral-200 rounded-lg p-3 flex flex-col items-center justify-center text-center gap-1 hover:border-neutral-300 transition-colors">
+                                <span class="text-xs text-neutral-500 font-medium">Other</span>
+                                <span class="text-xl font-semibold text-neutral-900 tracking-tight">3</span>
+                                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-500 text-xs mt-1" width="14" height="14"></iconify-icon>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documents Section -->
+                    <section class="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden">
+                        <div class="flex items-center justify-between p-5 border-b border-neutral-100">
+                            <h2 class="text-sm font-semibold text-neutral-900">Documents</h2>
+                            <div class="flex gap-2">
+                                <button class="p-1.5 text-neutral-400 hover:text-neutral-900 transition-colors rounded hover:bg-neutral-50">
+                                    <iconify-icon icon="solar:sort-vertical-linear" width="18" height="18"></iconify-icon>
+                                </button>
+                                <button class="p-1.5 text-neutral-400 hover:text-neutral-900 transition-colors rounded hover:bg-neutral-50">
+                                    <iconify-icon icon="solar:filter-linear" width="18" height="18"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-neutral-100">
+                            
+                            <!-- Uploaded Documents -->
+                            <div class="p-6">
+                                <h3 class="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                    <iconify-icon icon="solar:upload-linear" class="text-neutral-400" width="14" height="14"></iconify-icon>
+                                    Uploaded
+                                </h3>
+                                <div class="flex flex-col gap-3">
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-red-50 text-red-500 flex items-center justify-center shrink-0 border border-red-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Chicas_Complaint.pdf</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Complaint</span>
+                                                <span class="text-[10px] text-neutral-400">Jan 25, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-red-50 text-red-500 flex items-center justify-center shrink-0 border border-red-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Amazon_Answer.pdf</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Answer</span>
+                                                <span class="text-[10px] text-neutral-400">Jan 25, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-red-50 text-red-500 flex items-center justify-center shrink-0 border border-red-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Plaintiffs_RFP_Set1.pdf</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">RFP (Initial)</span>
+                                                <span class="text-[10px] text-neutral-400">Jan 25, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-red-50 text-red-500 flex items-center justify-center shrink-0 border border-red-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Plaintiffs_Interrogatories.pdf</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">ROG (Initial)</span>
+                                                <span class="text-[10px] text-neutral-400">Jan 25, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Generated Documents -->
+                            <div class="p-6">
+                                <h3 class="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                    <iconify-icon icon="solar:magic-stick-3-linear" class="text-neutral-400" width="14" height="14"></iconify-icon>
+                                    Generated
+                                </h3>
+                                <div class="flex flex-col gap-3">
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-blue-50 text-blue-500 flex items-center justify-center shrink-0 border border-blue-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Responses_Objections_v1.docx</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Responses</span>
+                                                <span class="text-[10px] text-neutral-400">Feb 3, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-blue-50 text-blue-500 flex items-center justify-center shrink-0 border border-blue-100">
+                                            <iconify-icon icon="solar:file-text-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Client_Summary_v1.docx</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Summary</span>
+                                                <span class="text-[10px] text-neutral-400">Feb 3, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-100">
+                                            <iconify-icon icon="solar:file-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Data_Request_Sheet_v1.xlsx</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Data Sheet</span>
+                                                <span class="text-[10px] text-neutral-400">Feb 3, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Doc Item -->
+                                    <div class="group flex items-start gap-3 p-2 rounded-lg hover:bg-neutral-50 transition-colors cursor-pointer -mx-2">
+                                        <div class="w-8 h-8 rounded bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-100">
+                                            <iconify-icon icon="solar:file-linear" width="16" height="16"></iconify-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-neutral-900 truncate group-hover:text-[#FF5E00] transition-colors">Internal_Tracker_v1.xlsx</p>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                <span class="text-[10px] font-medium bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded">Tracker</span>
+                                                <span class="text-[10px] text-neutral-400">Feb 3, 2026</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column (Sidebar) -->
+                <div class="col-span-12 xl:col-span-4 flex flex-col gap-6">
+                    
+                    <!-- Actions Panel -->
+                    <div class="bg-neutral-900 rounded-xl p-5 shadow-sm text-white flex flex-col gap-3">
+                        <h2 class="text-sm font-semibold mb-1">Actions</h2>
+                        <button class="w-full flex items-center justify-center gap-2 bg-[#FF5E00] hover:bg-[#FF5E00]/90 text-white p-3 rounded-lg text-sm font-medium transition-all shadow-md">
+                            <iconify-icon icon="solar:pen-new-square-linear" width="18" height="18"></iconify-icon>
+                            Review/Edit Responses
+                        </button>
+                        <button class="w-full flex items-center justify-center gap-2 bg-neutral-800 hover:bg-neutral-700 text-white p-3 rounded-lg text-sm font-medium transition-all border border-neutral-700">
+                            <iconify-icon icon="solar:magic-stick-3-linear" width="18" height="18"></iconify-icon>
+                            Generate New Documents
+                        </button>
+                        <div class="h-[1px] bg-neutral-800 my-1"></div>
+                        <button class="w-full flex items-center gap-2 text-neutral-400 hover:text-white p-2 rounded-lg text-sm font-medium transition-all">
+                            <iconify-icon icon="solar:add-circle-linear" width="18" height="18"></iconify-icon>
+                            Start Supplemental Response
+                        </button>
+                        <button class="w-full flex items-center gap-2 text-neutral-400 hover:text-red-400 p-2 rounded-lg text-sm font-medium transition-all">
+                            <iconify-icon icon="solar:archive-linear" width="18" height="18"></iconify-icon>
+                            Archive Case
+                        </button>
+                    </div>
+
+                    <!-- Activity Timeline -->
+                    <div class="bg-white rounded-xl border border-neutral-200 shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-sm font-semibold text-neutral-900">Activity</h2>
+                            <button class="text-neutral-400 hover:text-neutral-900 transition-colors">
+                                <iconify-icon icon="solar:history-linear" width="16" height="16"></iconify-icon>
+                            </button>
+                        </div>
+                        <div class="relative pl-2">
+                            <!-- Vertical Line -->
+                            <div class="absolute left-[7px] top-2 bottom-2 w-[1px] bg-neutral-100"></div>
+
+                            <div class="flex flex-col gap-6">
+                                <!-- Item 1 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-[#FF5E00] shadow-[0_0_0_1px_rgba(255,94,0,0.2)]"></div>
+                                    <p class="text-xs text-neutral-500 mb-0.5">Feb 3, 2026</p>
+                                    <p class="text-sm font-medium text-neutral-900">Documents generated (v1)</p>
+                                </div>
+                                <!-- Item 2 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                                    <p class="text-xs text-neutral-500 mb-0.5">Feb 3, 2026</p>
+                                    <p class="text-sm text-neutral-700">All responses approved</p>
+                                </div>
+                                <!-- Item 3 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                                    <p class="text-xs text-neutral-500 mb-0.5">Jan 28, 2026</p>
+                                    <p class="text-sm text-neutral-700">Categories reviewed and adjusted</p>
+                                </div>
+                                <!-- Item 4 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                                    <p class="text-xs text-neutral-500 mb-0.5">Jan 25, 2026</p>
+                                    <p class="text-sm text-neutral-700">Documents uploaded and processed</p>
+                                </div>
+                                <!-- Item 5 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                                    <p class="text-xs text-neutral-500 mb-0.5">Jan 25, 2026</p>
+                                    <p class="text-sm text-neutral-700">Case created</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+</body></html>

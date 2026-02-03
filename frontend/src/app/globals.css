@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #ffffff;
+  color: #171717;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hide scrollbar for main content */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Sidebar Expansion Logic */
+#sidebar {
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#main-wrapper {
+  transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+body.has-expanded-sidebar #sidebar {
+  width: 16rem;
+}
+
+body.has-expanded-sidebar #main-wrapper {
+  padding-left: 16rem;
+}
+
+/* Sidebar Items */
+body.has-expanded-sidebar #sidebar .sidebar-item {
+  justify-content: flex-start !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+body.has-expanded-sidebar #sidebar .nav-label {
+  position: static !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  padding: 0 0 0 12px !important;
+  pointer-events: auto !important;
+  display: inline-block !important;
+  white-space: nowrap;
+}
+
+/* Sidebar Header */
+#collapse-trigger {
+  display: none;
+}
+
+#expand-trigger {
+  display: flex;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+#logo-wrapper:hover #expand-trigger {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+body.has-expanded-sidebar #sidebar-header {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  justify-content: space-between;
+}
+
+body.has-expanded-sidebar #collapse-trigger {
+  display: block;
+}
+
+body.has-expanded-sidebar #expand-trigger {
+  display: none !important;
+  pointer-events: none;
+}
+
+body.has-expanded-sidebar #logo-wrapper {
+  pointer-events: none;
+}
+
+/* Sidebar Animations */
+#sidebar .nav-label {
+  transition: opacity 0s;
+}
+
+#sidebar .sidebar-item:hover .nav-label {
+  transition: opacity 0.3s;
+}
+
+body.has-expanded-sidebar #sidebar .nav-label {
+  transition: opacity 0.3s ease 0.15s !important;
+}
+
+body.has-expanded-sidebar #sidebar-bottom-actions {
+  align-items: stretch !important;
+}
+
+body.has-expanded-sidebar #sidebar-user-profile {
+  margin-left: 1rem;
+}
+
+/* Custom Form Inputs */
+.custom-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  appearance: none;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid #d4d4d4;
+  border-radius: 0.25em;
+  display: grid;
+  place-content: center;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.custom-checkbox::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 0.1s transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.custom-checkbox:checked {
+  background-color: #FF5E00;
+  border-color: #FF5E00;
+}
+
+.custom-checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* Custom Radio */
+.custom-radio:checked + div {
+  background-color: rgba(255, 94, 0, 0.03);
+  border-color: #FF5E00;
+}
+
+.custom-radio:checked + div .radio-circle {
+  border-color: #FF5E00;
+  border-width: 5px;
+}
+
+/* Dropdown Arrow Animation */
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary svg.chevron {
+  transform: rotate(180deg);
+}
+
+/* Dashed Border Utility */
+.dashed-border {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23E5E5E5FF' stroke-width='1' stroke-dasharray='6%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+/* Highlight Class for terms */
+.highlight-term {
+  background-color: #FEF3C7;
+  border-radius: 2px;
+  padding: 0 2px;
+  color: #92400E;
+  font-weight: 500;
+}
+
+/* Editor Styles */
+.editor-content {
+  font-family: 'Newsreader', serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #171717;
+}
+
+.editor-variable {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  padding: 0px 4px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85em;
+  font-weight: 500;
+  border: 1px solid #dbeafe;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LitigationOS | Generation Complete</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Iconify -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+body {
+background-color: #f5f5f5;
+color: #171717;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Sidebar Logic */
+#sidebar { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#main-wrapper { transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+body.has-expanded-sidebar #sidebar { width: 16rem; }
+body.has-expanded-sidebar #main-wrapper { padding-left: 16rem; }
+body.has-expanded-sidebar #sidebar .sidebar-item {
+justify-content: flex-start !important;
+padding-left: 1rem !important;
+padding-right: 1rem !important;
+}
+body.has-expanded-sidebar #sidebar .nav-label {
+position: static !important;
+opacity: 1 !important;
+background-color: transparent !important;
+color: inherit !important;
+box-shadow: none !important;
+padding: 0 0 0 12px !important;
+pointer-events: auto !important;
+display: inline-block !important;
+white-space: nowrap;
+}
+/* Sidebar Header Triggers */
+#collapse-trigger { display: none; }
+#expand-trigger { display: flex; opacity: 0; pointer-events: auto; }
+#logo-wrapper:hover #expand-trigger { opacity: 1; background-color: rgba(255,255,255,0.95); }
+body.has-expanded-sidebar #sidebar-header { padding-left: 1rem; padding-right: 1rem; justify-content: space-between; }
+body.has-expanded-sidebar #collapse-trigger { display: block; }
+body.has-expanded-sidebar #expand-trigger { display: none !important; pointer-events: none; }
+body.has-expanded-sidebar #logo-wrapper { pointer-events: none; }
+/* Sidebar Text Transitions */
+#sidebar .nav-label { transition: opacity 0s; }
+#sidebar .sidebar-item:hover .nav-label { transition: opacity 0.3s; }
+body.has-expanded-sidebar #sidebar .nav-label { transition: opacity 0.3s ease 0.15s !important; }
+body.has-expanded-sidebar #sidebar-bottom-actions { align-items: stretch !important; }
+body.has-expanded-sidebar #sidebar-user-profile { margin-left: 1rem; }
+body.has-expanded-sidebar .toggle-hints-wrapper { display: flex !important; }
+/* Anim */
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+animation: fadeIn 0.4s ease-out forwards;
+}
+.animate-fade-in-delay-1 { animation: fadeIn 0.4s ease-out 0.1s forwards; opacity: 0; }
+.animate-fade-in-delay-2 { animation: fadeIn 0.4s ease-out 0.2s forwards; opacity: 0; }
+</style>
+<script>
+function toggleSidebar() {
+document.body.classList.toggle('has-expanded-sidebar');
+}
+</script></head>
+  <body class="h-screen overflow-hidden selection:bg-[#FF5E00] selection:text-white relative bg-[#FAFAFA] text-neutral-900 flex">
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/50"></div>
+    </div>
+
+    <!-- Left Sidebar -->
+    <nav class="fixed z-50 flex flex-col bg-white w-[72px] border-neutral-200 border-r pt-6 pb-6 top-0 bottom-0 left-0 justify-between shadow-sm" id="sidebar">
+      <div class="flex flex-col items-center gap-6 w-full">
+        <!-- Sidebar Header -->
+        <div id="sidebar-header" class="flex items-center justify-center w-full px-2 min-h-[40px] relative">
+          <div id="logo-wrapper" class="relative flex items-center justify-center w-10 h-10 shrink-0 rounded-xl cursor-pointer">
+            <div class="text-[#FF5E00]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fire">
+                <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path>
+              </svg>
+            </div>
+            <button onclick="toggleSidebar()" id="expand-trigger" class="absolute inset-0 flex items-center justify-center rounded-xl text-neutral-400 transition-all backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <path d="M9 3v18"></path>
+                <path d="m14 9 3 3-3 3"></path>
+              </svg>
+            </button>
+          </div>
+          <button id="collapse-trigger" onclick="toggleSidebar()" class="text-neutral-400 hover:text-neutral-600 transition-colors p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M9 3v18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-8 h-[1px] bg-neutral-100"></div>
+
+        <!-- Nav Items -->
+        <div class="flex flex-col gap-2 w-full px-2">
+          <!-- Dashboard -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard w-5 h-5 stroke-[1.5]">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Command Center
+            </span>
+          </a>
+          <!-- The Vault -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed w-5 h-5 stroke-[1.5]">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+            </svg>
+            <div class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 shadow-lg transition-opacity duration-300 text-xs flex items-center gap-2">
+              The Vault
+            </div>
+          </a>
+          <!-- New Case (Active Context) -->
+          <a href="#" class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-[#FF5E00] bg-[#FF5E00]/5 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 stroke-[1.5]">
+              <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <span class="nav-label absolute left-14 px-2 py-1 bg-neutral-900 text-white font-normal rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-50 shadow-lg transition-opacity duration-300 text-xs">
+              Active Case
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="flex flex-col items-center gap-4 w-full px-2" id="sidebar-bottom-actions">
+        <button class="sidebar-item group relative flex items-center justify-center p-2.5 rounded-lg text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-5 h-5 stroke-[1.5]">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.72l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.72l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+        <button class="relative mt-2 w-9 h-9 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-[#FF5E00]/20 transition-all shrink-0" id="sidebar-user-profile">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="User Profile" class="w-full h-full object-cover">
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div id="main-wrapper" class="flex flex-1 pl-[72px] transition-all duration-300 w-full h-full flex-col">
+      
+      <!-- Top Header Area (Fixed) -->
+      <header class="bg-[#FAFAFA] border-b border-neutral-200 px-8 py-6 shrink-0 z-20">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-xs text-neutral-500 mb-2 font-medium">
+             <span>Cases</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span>Chicas v. Amazon</span>
+             <iconify-icon icon="solar:alt-arrow-right-linear" class="text-neutral-300"></iconify-icon>
+             <span class="text-neutral-900">Complete</span>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto p-8">
+        <div class="max-w-6xl mx-auto flex flex-col gap-8">
+          
+          <!-- Success Hero -->
+          <div class="flex flex-col items-center justify-center pt-8 pb-4 animate-fade-in text-center">
+             <div class="w-16 h-16 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-6 ring-8 ring-green-50/50">
+                <iconify-icon icon="solar:check-circle-linear" width="32" stroke-width="2"></iconify-icon>
+             </div>
+             <h1 class="text-3xl font-semibold tracking-tight text-neutral-900 mb-2">Documents Ready</h1>
+             <p class="text-neutral-500 text-base max-w-md">All documents for <span class="font-medium text-neutral-900">Chicas v. Amazon</span> have been generated successfully and are ready for download.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start animate-fade-in-delay-1">
+             
+             <!-- Left Column: Downloads List -->
+             <div class="lg:col-span-2 flex flex-col bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/30">
+                  <h3 class="font-medium text-neutral-900">Generated Files</h3>
+                  <span class="text-xs font-medium text-neutral-400 uppercase tracking-wider">4 Files</span>
+                </div>
+                
+                <div class="divide-y divide-neutral-100">
+                   <!-- File 1 -->
+                   <div class="group flex items-center p-4 hover:bg-neutral-50 transition-colors gap-4">
+                      <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                         <iconify-icon icon="solar:document-text-linear" width="20"></iconify-icon>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                         <div class="text-sm font-medium text-neutral-900 truncate">Chicas_v_Amazon_Responses_Objections.docx</div>
+                         <div class="flex items-center gap-3 mt-0.5">
+                            <span class="text-xs text-neutral-500">Word Document</span>
+                            <span class="w-1 h-1 rounded-full bg-neutral-300"></span>
+                            <span class="text-xs text-neutral-500">245 KB</span>
+                         </div>
+                      </div>
+                      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <button class="p-2 text-neutral-400 hover:text-neutral-900 hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Preview">
+                            <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                         </button>
+                         <button class="p-2 text-neutral-400 hover:text-[#FF5E00] hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Download">
+                            <iconify-icon icon="solar:download-minimalistic-linear" width="18"></iconify-icon>
+                         </button>
+                      </div>
+                   </div>
+
+                   <!-- File 2 -->
+                   <div class="group flex items-center p-4 hover:bg-neutral-50 transition-colors gap-4">
+                      <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                         <iconify-icon icon="solar:document-text-linear" width="20"></iconify-icon>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                         <div class="text-sm font-medium text-neutral-900 truncate">Chicas_v_Amazon_Client_Summary.docx</div>
+                         <div class="flex items-center gap-3 mt-0.5">
+                            <span class="text-xs text-neutral-500">Word Document</span>
+                            <span class="w-1 h-1 rounded-full bg-neutral-300"></span>
+                            <span class="text-xs text-neutral-500">34 KB</span>
+                         </div>
+                      </div>
+                      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <button class="p-2 text-neutral-400 hover:text-neutral-900 hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Preview">
+                            <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                         </button>
+                         <button class="p-2 text-neutral-400 hover:text-[#FF5E00] hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Download">
+                            <iconify-icon icon="solar:download-minimalistic-linear" width="18"></iconify-icon>
+                         </button>
+                      </div>
+                   </div>
+
+                   <!-- File 3 -->
+                   <div class="group flex items-center p-4 hover:bg-neutral-50 transition-colors gap-4">
+                      <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                         <iconify-icon icon="solar:file-send-linear" width="20"></iconify-icon>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                         <div class="text-sm font-medium text-neutral-900 truncate">Chicas_v_Amazon_Data_Request_Sheet.xlsx</div>
+                         <div class="flex items-center gap-3 mt-0.5">
+                            <span class="text-xs text-neutral-500">Excel Spreadsheet</span>
+                            <span class="w-1 h-1 rounded-full bg-neutral-300"></span>
+                            <span class="text-xs text-neutral-500">28 KB</span>
+                         </div>
+                      </div>
+                      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <button class="p-2 text-neutral-400 hover:text-neutral-900 hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Preview">
+                            <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                         </button>
+                         <button class="p-2 text-neutral-400 hover:text-[#FF5E00] hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Download">
+                            <iconify-icon icon="solar:download-minimalistic-linear" width="18"></iconify-icon>
+                         </button>
+                      </div>
+                   </div>
+
+                   <!-- File 4 -->
+                   <div class="group flex items-center p-4 hover:bg-neutral-50 transition-colors gap-4">
+                      <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                         <iconify-icon icon="solar:file-send-linear" width="20"></iconify-icon>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                         <div class="text-sm font-medium text-neutral-900 truncate">Chicas_v_Amazon_Internal_Tracker.xlsx</div>
+                         <div class="flex items-center gap-3 mt-0.5">
+                            <span class="text-xs text-neutral-500">Excel Spreadsheet</span>
+                            <span class="w-1 h-1 rounded-full bg-neutral-300"></span>
+                            <span class="text-xs text-neutral-500">156 KB</span>
+                         </div>
+                      </div>
+                      <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <button class="p-2 text-neutral-400 hover:text-neutral-900 hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Preview">
+                            <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                         </button>
+                         <button class="p-2 text-neutral-400 hover:text-[#FF5E00] hover:bg-white rounded-md transition-all border border-transparent hover:border-neutral-200 hover:shadow-sm" title="Download">
+                            <iconify-icon icon="solar:download-minimalistic-linear" width="18"></iconify-icon>
+                         </button>
+                      </div>
+                   </div>
+                </div>
+             </div>
+
+             <!-- Right Column: Actions & Meta -->
+             <div class="flex flex-col gap-6 lg:col-span-1 animate-fade-in-delay-2">
+                
+                <!-- Primary Action Card -->
+                <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-5 flex flex-col gap-4">
+                    <button class="w-full flex items-center justify-center gap-2 bg-[#FF5E00] hover:bg-[#e55500] text-white px-5 py-3 rounded-lg text-sm font-semibold transition-all shadow-md shadow-[#FF5E00]/20 hover:shadow-[#FF5E00]/30 hover:-translate-y-0.5">
+                       <iconify-icon icon="solar:archive-down-linear" width="18"></iconify-icon>
+                       <span>Download All (.zip)</span>
+                    </button>
+                    
+                    <div class="pt-4 border-t border-neutral-100 space-y-3">
+                       <div class="flex justify-between items-start text-xs">
+                          <span class="text-neutral-500">Generated</span>
+                          <span class="text-neutral-900 text-right font-medium">Feb 3, 2026<br><span class="text-neutral-400 font-normal">at 2:45 PM</span></span>
+                       </div>
+                       <div class="flex justify-between items-start text-xs">
+                          <span class="text-neutral-500">Response Deadline</span>
+                          <span class="text-red-600 text-right font-medium">Feb 28, 2026</span>
+                       </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="bg-transparent pt-2">
+                   <h4 class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">Next Steps</h4>
+                   <div class="flex flex-col gap-2">
+                      <button class="w-full flex items-center justify-between p-3 bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-all shadow-sm hover:shadow group text-left">
+                         <span>Return to Case Dashboard</span>
+                         <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400 group-hover:text-neutral-900 transition-colors"></iconify-icon>
+                      </button>
+                      <button class="w-full flex items-center justify-between p-3 bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-all shadow-sm hover:shadow group text-left">
+                         <span>Start Supplemental Response</span>
+                         <iconify-icon icon="solar:add-circle-linear" class="text-neutral-400 group-hover:text-neutral-900 transition-colors"></iconify-icon>
+                      </button>
+                   </div>
+                </div>
+
+             </div>
+
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+  
+</body></html>
